@@ -1,6 +1,6 @@
 # User Guide
 
-Ok, first of all you need a Stellar account since payments will be sent to that account, so go get one and fund it with at least 1 XLM.
+Ok, first of all you need a Stellar account since payments will be sent to that account, so [go get one](https://www.stellar.org/account-viewer) and fund it with at least 1 XLM.
 
 Once you have your account ready, we will be using the **public key** only, keep your **secret key** in a safe place and do not share it, do not enter it in any website on the internet. The public key is the address people will use to send payments for their purchases.
 
@@ -50,7 +50,7 @@ Finally, add the Stellar SDK and PayWithStellar libraries to the end of the html
 <script id="pay-with-stellar" mid="yourmerchantid*stellar.org" src="/scripts/paywithstellar.js">
 ````
 
-/Note: While we aim for excellence in the confirmation process, it is also good practice to check your Stellar account's ledger for incoming payments to catch transactions that for some reason could not be verified by our library so you can offer superb customer service when required./
+*Note: While we aim for excellence in the confirmation process, it is also good practice to check your Stellar account's ledger for incoming payments to catch transactions that for some reason could not be verified by our library so you can offer superb customer service when required.*
 
 If you have problems implementing the PayWithStellar button or want to share any feedback, please [open an issue](https://github.com/kuyawa/PayWithStellar/issues) and we will gladly help you.
 
