@@ -57,3 +57,10 @@ You can see it running in this test site, play with it and pay with fake money t
 And please donate to help create more tools for the Stellar platform.
 
     GALT5LR4TDTR5TX7GFHYZQIZRDD6HX32YHXYII7CAFG3ZOZALZUYGMZK
+
+----
+
+External libraries
+
+- Stellar SDK by the Stellar Foundation - https://github.com/stellar/js-stellar-sdk/
+- QRCode JS by David Shim - https://github.com/davidshimjs/qrcodejs

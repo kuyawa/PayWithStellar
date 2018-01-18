@@ -251,6 +251,7 @@ var PayWithStellar = (function(){
 PayWithStellar.main(stellarConfirm, stellarCancel);
 
 //---- QRCODE --------------------------------------------------------------------
+// QRCodeJS by David Shim - https://github.com/davidshimjs/qrcodejs
 // Embedded script to avoid loading external libraries except Stellar
 //--------------------------------------------------------------------------------
 var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this.parsedData=[];for(var b=[],d=0,e=this.data.length;e>d;d++){
