@@ -15,12 +15,16 @@ In order to use **PayWithStellar** on your site you need to follow these easy st
 - Download the PayWithStellar.jpg button image from [here](https://github.com/kuyawa/PayWithStellar/blob/master/media/paywithstellar.jpg)
 - Add a click event to all your insta-pay buttons or to your checkout form at the end:
 
+````HTML
     <button onclick="PayWithStellar.payment(event, 950.00, 'YourOrderID')">
+````
 
 - Add confirm and cancel events to process your orders based on our response
 - Add the PayWithStellar.js library at the end of your html code
 
+````HTML
     <script id="pay-with-stellar" mid="yourmerchantid*stellar.org" src="paywithstellar.js">
+````
 
 For more detailed information on how to set up your PayWithStellar button please refer to the [User Guide](https://github.com/kuyawa/PayWithStellar/blob/master/docs/userguide.md)
 

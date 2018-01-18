@@ -82,6 +82,7 @@ var PayWithStellar = (function(){
     function onCancel() {
         hideModal();
         state.orderid = null; // Reset to avoid issues
+        if(state.channel) { state.channel(); } // Close stream
         state.onCancel(state.refid);
     }
 
@@ -116,7 +117,8 @@ var PayWithStellar = (function(){
 
     function updateTotal() {
         var total = money(Math.round(state.amount / state.priceusd), 2);
-        $('xlm-total').innerHTML = total;
+        var tag   = $('xlm-total');
+        if(tag) { tag.innerHTML = total; }
     }
 
 
