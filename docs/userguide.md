@@ -2,7 +2,7 @@
 
 Ok, first of all you need a Stellar account since payments will be sent to that account, so [go get one](https://www.stellar.org/account-viewer) and fund it with at least 1 XLM.
 
-Once you have your account ready, we will be using the **public key** only, keep your **secret key** in a safe place and do not share it, do not enter it in any website on the internet. The public key is the address people will use to send payments for their purchases.
+Once you have your account ready, we will be using the **public key** only, keep your **secret key** in a safe place and do not share it, do not enter it in any website on the internet. The public key is the address people will use to send you payments for their purchases.
 
 Download the PayWithStellar button image from [here](https://github.com/kuyawa/PayWithStellar/blob/master/media/paywithstellar.jpg) and save it in your website media folder.
 
@@ -19,7 +19,7 @@ The buttons should have the following attributes:
 ````
 The parameters passed to the payment method are the event (literal word), the amount of the purchase and the order id which could be any reference to orders, transactions, tokens, etc that you control on your site to identify purchases.
 
-The onclick event will call our library to listen for payments sent to your account. If a payment is received we will verify the order Id and amount match, only then the payment is confirmed and you will be notified.
+The onclick event will call our library to listen for payments sent to your account. If a payment is received we will verify that the order Id and amount do match, only then the payment is confirmed and you will be notified.
 
 The payment process can emit two possible outcomes: Confirm or Cancel. You need to define two methods to handle both scenarios in your site using the following format:
 
@@ -43,7 +43,7 @@ function stellarCancel(refid) {
 
 You should define these events to do some post-processing after the order has been confirmed for automated fulfillment, redirecting to download links, etc.
 
-Finally, add the Stellar SDK and PayWithStellar libraries to the end of the html page:
+Finally, add the Stellar SDK and PayWithStellar libraries at the end of the html page:
 
 ````HTML
 <script src="/scripts/stellar-sdk.js"></script>
