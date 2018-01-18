@@ -1,6 +1,6 @@
 # User Guide
 
-Ok, first of all you need a Stellar account since payments will be sent to that account, so [go get one](https://www.stellar.org/account-viewer) and fund it with at least 1 XLM.
+Ok, first of all you need a Stellar account since payments will be sent to that account using Stellar XLM, so [go get one](https://www.stellar.org/account-viewer) and fund it with at least 1 XLM.
 
 Once you have your account ready, we will be using the **public key** only, keep your **secret key** in a safe place and do not share it, do not enter it in any website on the internet. The public key is the address people will use to send you payments for their purchases.
 
