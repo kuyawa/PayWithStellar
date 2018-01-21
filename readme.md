@@ -16,10 +16,12 @@ In order to use **PayWithStellar** on your site you need to follow these easy st
 - Add a click event to all your insta-pay buttons or to your checkout form at the end:
 
 ````HTML
-    <button onclick="PayWithStellar.payment(event, 950.00, 'YourOrderID')">
+<button onclick="PayWithStellar.payment(event, 950.00, 'YourOrderID')">
+    <img src="/media/paywithstellar.jpg">
+</button>
 ````
 
-- Add confirm and cancel events to process your orders based on our response
+- Add confirm and cancel methods to process your orders based on our response
 ````HTML
 <script>
 function myOrderConfirm(refid) {
