@@ -26,10 +26,11 @@ The payment process can emit two possible outcomes: Confirm or Cancel. You need 
 ````HTML
 <!-- Your two functions to capture our events -->
 <script>
-function myOrderConfirm(refid) {
+function myOrderConfirm(refid, txid) {
     if(PayWithStellar.lastOrder() == refid){
         alert('Thank you for your purchase!\nOrder ID: '+refid);
         // Confirmed order id {refid}
+        // Validate Stellar txid on server for better security
         // redirect to download link
         // window.location.href = 'http://example.com/download/'+refid
     }

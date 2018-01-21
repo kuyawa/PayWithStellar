@@ -24,10 +24,11 @@ In order to use **PayWithStellar** on your site you need to follow these easy st
 - Add confirm and cancel methods to process your orders based on our response
 ````HTML
 <script>
-function myOrderConfirm(refid) {
+function myOrderConfirm(refid, txid) {
     if(PayWithStellar.lastOrder() == refid){
         alert('Thank you for your purchase!\nOrder ID: '+refid);
         // Confirmed order id {refid}
+        // Validate Stellar txid on server for better security
         // redirect to download link
         // window.location.href = 'http://example.com/download/'+refid
     }
