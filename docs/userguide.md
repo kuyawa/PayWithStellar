@@ -26,7 +26,7 @@ The payment process can emit two possible outcomes: Confirm or Cancel. You need 
 ````HTML
 <!-- Your two functions to capture our events -->
 <script>
-function stellarConfirm(refid) {
+function myOrderConfirm(refid) {
     if(PayWithStellar.lastOrder() == refid){
         alert('Thank you for your purchase!\nOrder ID: '+refid);
         // Confirmed order id {refid}
@@ -34,7 +34,7 @@ function stellarConfirm(refid) {
         // window.location.href = 'http://example.com/download/'+refid
     }
 }
-function stellarCancel(refid) {
+function myOrderCancel(refid) {
     // alert('Continue shopping!');
     // Cancel order id {refid}
 }
@@ -43,14 +43,37 @@ function stellarCancel(refid) {
 
 You should define these events to do some post-processing after the order has been confirmed for automated fulfillment, redirecting to download links, etc.
 
+Then initialize the PayWithStellar object with your options like:
+
+````HTML
+window.onload = function(){ 
+    var options = {
+        horizon    : 'test',
+        address    : 'G1234567890123456789012345678901234567890123456789012345',
+        currency   : 'EUR',
+        onConfirm  : myOrderConfirm,
+        onCancel   : myOrderCancel,
+    };
+    PayWithStellar.main(options);
+};
+````
+
+The simplest use assuming live network, no post-processing and USD currency would be:
+
+````HTML
+window.onload = function(){ 
+    PayWithStellar.main({address: 'G1234567890123456789012345678901234567890123456789012345'});
+};
+````
+
 Finally, add the Stellar SDK and PayWithStellar libraries at the end of the html page:
 
 ````HTML
 <script src="/scripts/stellar-sdk.js"></script>
-<script id="pay-with-stellar" mid="yourmerchantid*stellar.org" src="/scripts/paywithstellar.js">
+<script src="/scripts/paywithstellar.js">
 ````
 
-*Note: While we aim for excellence in the confirmation process, it is also good practice to check your Stellar account's ledger for incoming payments to catch transactions that for some reason could not be verified by our library so you can offer superb customer service when required.*
+* Note: While we aim for excellence in the confirmation process, it is also good practice to check your Stellar account's ledger for incoming payments to catch transactions that for some reason could not be verified by our library so you can offer superb customer service when required. *
 
 If you have problems implementing the PayWithStellar button or want to share any feedback, please [open an issue](https://github.com/kuyawa/PayWithStellar/issues) and we will gladly help you.
 

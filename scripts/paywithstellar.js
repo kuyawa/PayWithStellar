@@ -1,10 +1,4 @@
-// PayWithStellar
-
-/* TODO:
-
-- trim the fat of StellarSDK to use only transaction streaming
-
-*/
+// PayWithStellar v1.0
 
 var PayWithStellar = (function(){
 
@@ -18,41 +12,46 @@ var PayWithStellar = (function(){
         '#xlm-actions button:active { color: #333; background-color: #AAA; }'+
         '#xlm-after { padding: 10px 0; }'+
         '#xlm-address { text-align: center; font-size: 1.2em; font-family: monospace; word-wrap: break-word; }'+
-        '#qrcode { width: 200px; height: 200px; margin: 0 auto; }'+
-        '#qrcode img { width: 200px; height: 200px; }'+
+        '#xlm-qrcode { width: 200px; height: 200px; margin: 0 auto; }'+
+        '#xlm-qrcode img { width: 200px; height: 200px; }'+
         '@media screen and (max-width: 980px) and (orientation: portrait) {'+
-        ' #payxlm-form { bottom: 0; margin: 0 auto; padding: 10px; } '+
-        '}'+
+        ' #payxlm-form { bottom: 0; margin: 0 auto; padding: 10px; } }'+
         '</style>';
 
+    // Included for faster load times
+    var buttonImg = "data:image/jpg;base64,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";
+
     var formTemplate = styleSource+
-        '<li id="xlm-logo"><img src="/media/paywithstellar.jpg"></li>'+
+        '<li id="xlm-logo"><img src="'+buttonImg+'"></li>'+
         '<li>Please send payment of <span id="xlm-total">{total}</span> XLM to the following address and include code {refid} in the memo field</li>'+
         '<li id="xlm-address">{address}</li>'+
-        '<div id="qrcode"></div>'+
-        '<li id="xlm-after">Payment usually takes less than 10 secs to confirm. After payment is sent please wait for confirmation</li>'+
+        '<div id="xlm-qrcode"></div>'+
+        '<li id="xlm-after">Payments usually take less than 10 secs to confirm. After payment is sent please wait for confirmation</li>'+
         '<li id="xlm-actions"><button onclick="PayWithStellar.onConfirm()">CONFIRM</button> <button onclick="PayWithStellar.onCancel()">CANCEL</button></li>'+
         '<li id="xlm-results"></li>';
-        //'<a href="{intent}" target="_blank"><div id="qrcode"></div></a>'+
+        //'<a href="{intent}" target="_blank"><div id="xlm-qrcode"></div></a>'+
         //'<li>If you are on mobile</li><li>touch the QR-Code to take you to your wallet</li>';
+
 
     function payment(event, amount, refid) {
         var already  = $('payxlm-form');
         if(already) { hideModal(); return; }
-        var event    = event || window.event
-        var source   = event.target;
-        var total    = money(Math.round(amount / state.priceusd), 2);
-        var memo     = escape(refid); // unescape on client
-        var intent   = 'stellar://payment/'+state.address+'/'+amount+'/'+memo+'/';
         state.amount = amount;
         state.refid  = refid;
-        if(epoch()-state.lastCheck > 300000){ getTicker(true); }  // Update price after 5 mins
+        var event    = event || window.event
+        var source   = event.target;
+        var calc     = Math.round(state.amount / state.priceFiat / state.priceUsd); 
+        var total    = money(calc, calc<1?4:2);
+        console.log(state.amount, state.priceFiat, state.priceUsd, calc, total); 
+        var memo     = escape(refid); // unescape on client
+        var intent   = 'stellar://payment/'+state.options.address+'/'+amount+'/'+memo+'/';
+        if(epoch()-state.lastCheck > state.options.refreshRate){ getTicker(true); }  // Update price after 5 mins
 
         // Build modal popup
         var modal   = document.createElement('div');
         var modbg   = document.createElement('div');
         var form    = document.createElement('div');
-        var content = formTemplate.replace('{total}', total).replace('{refid}',refid).replace('{address}',state.address).replace('{intent}',intent);
+        var content = formTemplate.replace('{total}', total).replace('{refid}',refid).replace('{address}',state.options.address).replace('{intent}',intent);
         
         modal.setAttribute('id', 'payxlm-modal');
         modbg.setAttribute('id', 'payxlm-modbg');
@@ -73,7 +72,6 @@ var PayWithStellar = (function(){
     }
 
     function onConfirm() {
-        // TODO: Check if payment received
         if(!state.orderid){
             alert('Payment not received yet.\nPlease send payment to confirm order.');
         }
@@ -83,7 +81,7 @@ var PayWithStellar = (function(){
         hideModal();
         state.orderid = null; // Reset to avoid issues
         if(state.channel) { state.channel(); } // Close stream
-        state.onCancel(state.refid);
+        state.options.onCancel(state.refid);
     }
 
     function hideModal() {
@@ -93,11 +91,11 @@ var PayWithStellar = (function(){
     }
 
     function showQrcode() {
-        //console.log('Generating qrcode...');
-        new QRCode('qrcode', state.address);
+        new QRCode('xlm-qrcode', state.options.address);
     }
 
     function getTicker(update=false) {
+        console.log('Ticker');
         //var url = '/data/xlmprice.json';
         var url = 'https://api.coinmarketcap.com/v1/ticker/stellar/';
         webget(url, function(json) { 
@@ -109,18 +107,60 @@ var PayWithStellar = (function(){
             }
             PayWithStellar.ready = true;
             state.ready      = true;
-            state.priceusd   = json[0].price_usd;
+            state.priceUsd   = parseFloat(json[0].price_usd);
             state.lastCheck  = epoch();
             if(update){ updateTotal(); }
         });
     }
 
     function updateTotal() {
-        var total = money(Math.round(state.amount / state.priceusd), 2);
+        console.log('Update total');
+        var calc  = Math.round(state.amount / state.priceFiat / state.priceUsd);
+        var total = money(calc, calc<1?4:2);
         var tag   = $('xlm-total');
         if(tag) { tag.innerHTML = total; }
     }
 
+    function getCurrency(fiat) {
+        console.log('Fiat: ', fiat);
+        if(fiat == 'USD') { return; }
+        //var url = '/data/currencies.json';
+        var url = 'https://finance.yahoo.com/webservice/v1/symbols/allcurrencies/quote?format=json';
+        webget(url, function(json) { 
+            if(!json || json.error) {
+                PayWithStellar.ready = false;
+                state.ready = false;
+                alert('Internet connection error.\nPayments are suspended');
+                return;
+            }
+
+            var found  = false;
+            var symbol = 'USD/'+fiat;
+            console.log(json.list);
+            console.log(json.list.resources.length);
+
+            for (var i = 0; i < json.list.resources.length; i++) {
+                var item = json.list.resources[i];
+                if(item.resource.fields.name == symbol){ 
+                    state.priceFiat = parseFloat(item.resource.fields.price); 
+                    found = true;
+                    break;
+                }
+            }
+
+            if(!found) { 
+                console.log('Not found ',fiat);
+                alert('Currency price not found. Payments disabled'); 
+                state.ready = false; 
+                PayWithStellar.ready = false;
+                return; 
+            }
+
+            console.log('Found ', fiat, state.priceFiat);
+            state.ready = true;
+            PayWithStellar.ready = true;
+        });
+    }
 
     //---- PAYMENT CONFIRMATION
 
@@ -130,7 +170,7 @@ var PayWithStellar = (function(){
             server = new StellarSdk.Server('https://horizon.stellar.org');
         }
 
-        state.channel = server.transactions().forAccount(state.address).cursor('now').stream({
+        state.channel = server.transactions().forAccount(state.options.address).cursor('now').stream({
             onmessage: function(transaction) {
                 if(transaction.memo == refid) {
                     console.log('Found it ', refid);
@@ -160,12 +200,21 @@ var PayWithStellar = (function(){
         hideModal();
         state.channel = null;
         state.orderid = state.refid;
-        state.onConfirm(state.refid);
+        state.txid    = payment.id;
+        state.options.onConfirm(state.refid, state.txid);
     }
 
+    function getState() {
+        //return state;  // For debugging only
+    }
+
+
     //---- UTILS
-    function $(id) { return document.getElementById(id); }
+
+    function $(id)   { return document.getElementById(id); }
+
     function epoch() { return (new Date()).getTime(); }
+
     function money(text, dec=2, comma=false) {
         var num = 0;
         if(comma){
@@ -200,15 +249,26 @@ var PayWithStellar = (function(){
 
     //---- MAIN
 
+    var baseOptions = {
+        horizon     : 'live',
+        merchantId  : '',
+        registered  : false,
+        address     : '',
+        currency    : 'USD',
+        refreshRate : 300000,
+        onConfirm   : function(refid, txid) { alert('Payment confirmed!'); },
+        onCancel    : function(refid) {}
+    }
+
     var state = {
         ready     : false, 
-        net       : 'test', 
-        mid       : '', 
-        address   : '', 
-        priceusd  : 1.0, 
+        options   : baseOptions,
+        priceUsd  : 1.0, 
+        priceFiat : 1.0, 
         lastCheck : 0,
         lastToken : null,
         amount    : 0.0,
+        txid      : '',
         refid     : '', 
         orderid   : '',
         channel   : null,
@@ -217,42 +277,38 @@ var PayWithStellar = (function(){
         onCancel  : null
     };
 
-    function main(eventConfirm, eventCancel) {
-        // Get address from server by mid or let merchant use their own address, fed is ok merchant*stellar.org
-        //state.address  = 'G123456789012345678901234567890123456789012345678901234567';
-        var tag = $('pay-with-stellar');
-        if(!tag) { alert('Fatal error: PayWithStellar script not properly set up.\nRefer to the user guide.'); return; }
-        state.net       = tag.getAttribute('net').toLowerCase() || 'test';  // LIVE OR TEST
-        state.mid       = tag.getAttribute('mid');  // Merchant ID
-        state.address   = tag.getAttribute('mid');  // Federation ID or account address
-        state.priceusd  = 1.00;  // Get from our servers or Coinmarketcap
-        state.onConfirm = eventConfirm;
-        state.onCancel  = eventCancel;
-        PayWithStellar.horizon = state.net; // For debugging
-        if(!state.address) { alert('Fatal error: Stellar address not set up.\nRefer to the user guide.'); return; }
-
+    function main(options) {
+        if(!options) { options = baseOptions; }
+        if(!options.address) { alert('Fatal error: Stellar address not set up.\nRefer to the user guide.'); return; }
+        state.options.horizon     = options.horizon     || 'live';
+        state.options.merchantId  = options.merchantId  || '';
+        state.options.address     = options.address     || '';
+        state.options.currency    = options.currency    || 'USD';
+        state.options.refreshRate = options.refreshRate || 300000;
+        state.options.onConfirm   = options.onConfirm;
+        state.options.onCancel    = options.onCancel;
+        if(state.options.currency.toUpperCase()!='USD'){ getCurrency(state.options.currency); }
+        options = null;
         getTicker();
     }
 
     var App = {
-        horizon   : 'test',
         ready     : false,
         main      : main,
         payment   : payment,
+        lastOrder : lastOrder,
         onConfirm : onConfirm,
-        onCancel  : onCancel,
-        lastOrder : lastOrder
+        onCancel  : onCancel
     };
 
     return App;
 
 })();
 
-PayWithStellar.main(stellarConfirm, stellarCancel);
 
 //---- QRCODE --------------------------------------------------------------------
 // QRCodeJS by David Shim - https://github.com/davidshimjs/qrcodejs
-// Embedded script to avoid loading external libraries except Stellar
+// Embedded script to avoid loading external libraries except StellarSDK
 //--------------------------------------------------------------------------------
 var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this.parsedData=[];for(var b=[],d=0,e=this.data.length;e>d;d++){
 var f=this.data.charCodeAt(d);f>65536?(b[0]=240|(1835008&f)>>>18,b[1]=128|(258048&f)>>>12,b[2]=128|(4032&f)>>>6,b[3]=128|63&f):f>2048?(b[0]=224|(61440&f)>>>12,

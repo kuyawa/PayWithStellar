@@ -20,10 +20,11 @@ In order to use **PayWithStellar** on your site you need to follow these easy st
 ````
 
 - Add confirm and cancel events to process your orders based on our response
-- Add the PayWithStellar.js library at the end of your html code
+- Add the PayWithStellar.js and StellarSDK.js library at the end of your html code
 
 ````HTML
-    <script id="pay-with-stellar" mid="yourmerchantid*stellar.org" src="paywithstellar.js">
+    <script src="stellar-sdk.js">
+    <script src="paywithstellar.js">
 ````
 
 For more detailed information on how to set up your PayWithStellar button please refer to the [User Guide](https://github.com/kuyawa/PayWithStellar/blob/master/docs/userguide.md)
