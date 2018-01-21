@@ -41,7 +41,7 @@ function myOrderCancel(refid) {
 
 - Initalize the PayWithStellar object with some options:
 
-````HTML
+````JS
 window.onload = function(){ 
     var options = {
         horizon    : 'test', // live
