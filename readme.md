@@ -20,7 +20,39 @@ In order to use **PayWithStellar** on your site you need to follow these easy st
 ````
 
 - Add confirm and cancel events to process your orders based on our response
-- Add the PayWithStellar.js and StellarSDK.js library at the end of your html code
+````HTML
+<script>
+function myOrderConfirm(refid) {
+    if(PayWithStellar.lastOrder() == refid){
+        alert('Thank you for your purchase!\nOrder ID: '+refid);
+        // Confirmed order id {refid}
+        // redirect to download link
+        // window.location.href = 'http://example.com/download/'+refid
+    }
+}
+function myOrderCancel(refid) {
+    // alert('Continue shopping!');
+    // Cancel order id {refid}
+}
+</script>
+````
+
+- Initalize the PayWithStellar object with some options:
+
+````HTML
+window.onload = function(){ 
+    var options = {
+        horizon    : 'test', // live
+        address    : 'G1234567890123456789012345678901234567890123456789012345',
+        currency   : 'EUR',  // USD, CAD, etc
+        onConfirm  : myOrderConfirm,
+        onCancel   : myOrderCancel,
+    };
+    PayWithStellar.main(options);
+};
+````
+
+- Add the PayWithStellar.js and StellarSDK.js libraries at the end of your html code
 
 ````HTML
     <script src="stellar-sdk.js">
@@ -58,6 +90,13 @@ You can see it running in this test site, play with it and pay with fake money t
 And please donate to help create more tools for the Stellar platform.
 
     GALT5LR4TDTR5TX7GFHYZQIZRDD6HX32YHXYII7CAFG3ZOZALZUYGMZK
+
+----
+
+## Changelog
+
+- Added world currencies
+- Initialize PayWithStellar object with options
 
 ----
 
