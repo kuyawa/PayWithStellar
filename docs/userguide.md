@@ -45,12 +45,12 @@ You should define these events to do some post-processing after the order has be
 
 Then initialize the PayWithStellar object with your options like:
 
-````HTML
+````JS
 window.onload = function(){ 
     var options = {
-        horizon    : 'test',
+        horizon    : 'test',  // live
         address    : 'G1234567890123456789012345678901234567890123456789012345',
-        currency   : 'EUR',
+        currency   : 'EUR',   // USD, CAD, etc.
         onConfirm  : myOrderConfirm,
         onCancel   : myOrderCancel,
     };
@@ -60,7 +60,7 @@ window.onload = function(){
 
 The simplest use assuming live network, no post-processing and USD currency would be:
 
-````HTML
+````JS
 window.onload = function(){ 
     PayWithStellar.main({address: 'G1234567890123456789012345678901234567890123456789012345'});
 };
@@ -70,7 +70,7 @@ Finally, add the Stellar SDK and PayWithStellar libraries at the end of the html
 
 ````HTML
 <script src="/scripts/stellar-sdk.js"></script>
-<script src="/scripts/paywithstellar.js">
+<script src="/scripts/paywithstellar.js"></script>
 ````
 
 * Note: While we aim for excellence in the confirmation process, it is also good practice to check your Stellar account's ledger for incoming payments to catch transactions that for some reason could not be verified by our library so you can offer superb customer service when required. *

@@ -57,8 +57,8 @@ window.onload = function(){
 - Add the PayWithStellar.js and StellarSDK.js libraries at the end of your html code
 
 ````HTML
-    <script src="stellar-sdk.js">
-    <script src="paywithstellar.js">
+    <script src="stellar-sdk.js"></script>
+    <script src="paywithstellar.js"></script>
 ````
 
 For more detailed information on how to set up your PayWithStellar button please refer to the [User Guide](https://github.com/kuyawa/PayWithStellar/blob/master/docs/userguide.md)
