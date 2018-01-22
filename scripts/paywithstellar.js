@@ -6,6 +6,7 @@ var PayWithStellar = (function(){
         '#payxlm-modal { z-index:  999; position: fixed; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height: 100%; text-align: center; }'+
         '#payxlm-modbg { z-index: -999; position: fixed; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height: 100%; background-color: #000; opacity: 0.6; text-align: center; }'+
         '#payxlm-form  { z-index: 9999; position: fixed; top: 0; left: 0;/*bottom: 0;*/right: 0; max-width: 540px; margin: 40px auto; padding: 20px; background-color: #FFF; border: 1px solid #CCC; border-radius: 4px; text-align: center; box-shadow: 0 0 40px rgba(0,0,0,1); }'+
+        '#payxlm-form li { list-style-type: none; }'+
         '#xlm-logo { text-align: center; }'+
         '#xlm-actions button { padding: 3px 20px; background-color: #CCC; border: 1px solid #AAA; border-radius: 3px; }'+
         '#xlm-actions button:hover  { color: #000; background-color: #DDD; cursor: pointer; }'+
