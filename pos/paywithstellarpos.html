@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1">
+<title>PayWithStellar</title>
+<style>
+html, body { margin: 0; padding: 0; font: normal 1em/1.4 'Helvetica Neue', sans-serif; }
+h1, h2, h3, h4 { font-weight: 300; margin: 0; padding: 0; }
+h2, h3 { font-family: monospace; }
+li { list-style-type: none; }
+input[type=text] { width: 256px; height: 1.2em; margin: 5px 0; text-align: center; font-size: 3em; font-family: monospace; }
+button { width: 100px; padding: 4px 8px; border-radius: 3px; border: 1px solid #147; color: #DEF; background-color: #369; font-variant: small-caps; }
+button:hover  { background-color: #47A; color: #FFF; cursor: pointer; }
+button:active { background-color: #258; color: #CDE; }
+button.action { background-color: #472; color: #CDC; border: 1px solid #040; }
+button.action:hover  { color: #EFE; background-color: #583; }
+button.action:active { color: #ABA; background-color: #361; }
+#form, #pay { box-sizing: border-box; width: 600px; margin: 0 auto; padding: 20px 0; border: 1px solid #EEE; text-align: center; background: url(/media/paper.jpg) repeat-y; background-size: contain; }
+#pay { display: none; text-align: center; }
+#info, #pay-info { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px dashed #AAA; }
+#pay-refid, #pay-amount { font-size: 3.4em;  }
+#convert, #pay-convert { font-family: monospace; }
+#dummy { width: 256px; height: 256px; margin: 20px auto; border: 1px dashed #AAA; }
+#qrcode { width: 256px; margin: 20px auto; }
+#foot { margin-top: 20px; padding-top: 20px; font-size: 0.8em; font-family: monospace; color: #888; border-top: 1px dashed #AAA; }
+
+/* RESPONSIVE */
+@media screen and (max-width: 980px) and (orientation: portrait) { /* Android */ }
+@media screen and (max-width: 740px) { /* iPhone 6S+ */
+    body { font-size: 0.9em; }
+    #form, #pay { width: 100%; }
+}
+@media screen and (max-width: 300px) { /* iPhone 6S */
+    body { font-size: 0.8em; }
+    #form, #pay { width: 100%; }
+    #logo { width: 160px; }
+}
+@media screen and (max-width: 256px) { /* iPhone SE */
+    body { font-size: 0.7em; }
+    #form, #pay { width: 100%; }
+    #logo { width: 140px; }
+}
+</style>
+</head>
+<body>
+<div id="form">
+	<li><img id="logo" src="/media/paywithstellar.jpg"></li>
+	<h1 id="name">Your business</h1>
+	<h4 id="info">Your address</h4>
+	<h3>Receipt #</h3>
+	<li><input type="text" id="refid"  value="0001"></li>
+	<h3>Total Amount</h3>
+	<li><input type="text" id="amount" value="100.00"></li>
+	<li id="convert">⩙100.00 &#8644; 1.0</li>
+	<div id="dummy"></div>
+	<li>
+		<button onclick="clearall()">Clear</button>
+		<button onclick="generate()" class="action">Generate</button>
+	</li>
+	<li id="foot">Thank your for using PayWithStellar</li>
+</div>
+<div id="pay">
+	<li><img src="/media/paywithstellar.jpg"></li>
+	<h1 id="pay-name">Your business</h1>
+	<h4 id="pay-info">Your address</h4>
+	<h3>Receipt #</h3>
+	<h2 id="pay-refid">0001</h2>
+	<h3>Total Amount</h3>
+	<h2 id="pay-amount">0.00</h2>
+	<li id="pay-convert">$100.00 &#8644; 1.0</li>
+	<div id="qrcode"></div>
+	<li><button onclick="thankyou()">Thank you!</button></li>
+</div>
+<script src="/scripts/qrcode.js"></script>
+<script>
+
+// Change settings according to your needs
+// Schema uses QRCode as stellar:payment?address={address}&amount={amount}&memo={memo}
+// Else only the address is used
+var config = { 
+	business  : 'Deadmeet Steakhouse',
+	tagline   : 'Where eating earthlings is a pleasure',
+	address   : 'G123456...',
+	currency  : 'USD',
+	priceUSD  : 1,
+	useSchema : false
+}
+
+function $(id) { return document.getElementById(id) }
+
+function main() {
+	$('name').innerHTML = config.business
+	$('info').innerHTML = config.tagline
+	$('pay-name').innerHTML = config.business
+	$('pay-info').innerHTML = config.tagline
+	$('amount').addEventListener('keyup', refresh, false)
+	$('refid').focus()
+	getTicker()	
+	// TODO: World currencies
+}
+
+function clearall() {
+	$('refid').value = ''
+	$('amount').value = ''
+	$('pay-refid').innerHTML = ''
+	$('pay-amount').innerHTML = ''
+	$('refid').focus()
+}
+
+function refresh(event) {
+	var amount = $('amount').value || 0
+	var total  = convertXLM(amount)
+	$('convert').innerHTML = '⩙'+money(total)+' &#8644; '+money(config.priceUSD,4)
+}
+
+function generate() {
+	var amount = $('amount').value || 0
+	var total  = convertXLM(amount)
+	var refid  = $('refid').value || '0001'
+	var code   = config.address
+	if(config.useScehma) {
+		var schema = "stellar:payment?address={address}&amount={amount}&memo={memo}"
+		var code   = schema.replace('{address}', config.address).replace('{amount}', total).replace('{memo}', refid)
+	}
+	$('qrcode').innerHTML = ''
+	new QRCode("qrcode", code)
+	// Show receipt
+	$('pay-refid').innerHTML   = refid
+	$('pay-amount').innerHTML  = '⩙'+money(total)
+	$('pay-convert').innerHTML = '$'+money(amount)+' &#8644; '+money(config.priceUSD,4)
+	$('form').style.display    = 'none'
+	$('pay').style.display     = 'block'
+}
+
+function thankyou() {
+	$('pay').style.display = 'none'
+	$('form').style.display = 'block'
+}
+
+function convertXLM(amount) {
+	return parseFloat(amount || 0) / config.priceUSD
+}
+
+function getTicker() {
+    //var url = '/data/xlmprice.json'
+    var url = 'https://api.coinmarketcap.com/v1/ticker/stellar/'
+    webget(url, function(json) { 
+        if(!json || json.error) {
+        	config.priceUSD = 1
+            alert('Internet connection error. Use XLM price instead of USD')
+            return
+        }
+        config.priceUSD = parseFloat(json[0].price_usd)
+        refresh()
+    })
+}
+
+function money(text, dec=2, comma=true) {
+    var num = 0
+    if(comma){
+        num = parseFloat(text).toLocaleString("en", {minimumFractionDigits: dec, maximumFractionDigits: dec})
+    } else {
+        num = parseFloat(text).toFixed(dec)
+    }
+    return num
+}
+
+function webget(url, callback) {
+    var http = new XMLHttpRequest()
+    http.open("GET", url, true)
+    http.onreadystatechange = function() { 
+        if(http.readyState==4) { 
+            //console.log('Response: '+http.responseText)
+            var json = null
+            try { 
+                json = JSON.parse(http.responseText) 
+            } catch(ex) { 
+                console.log("JSON ERROR", ex.message) 
+                json = { error: true, message: ex.message }
+                alert('Server error. Try later')
+            }
+            callback(json)
+        } 
+    }
+    http.send()
+}
+
+// Main
+window.onload = main
+
+</script>
+</body>
+</html>
